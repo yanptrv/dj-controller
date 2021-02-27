@@ -15,7 +15,7 @@
 <h3>Management:</h3>
 <ul>
 <li>Branching Strategy -> <a href="https://githubflow.github.io/">GitHub Flow</a></li>
-<li>Kanban</li>
+<li>Kanban - <a href="https://github.com/besenhimself/audioMixer/projects/1">GitHub Projects</a></li>
 <li>Mandatory Code Reviews</li>
 </ul>
 
@@ -23,8 +23,8 @@
 <ol>
 <li>Technology Research</li>
     <ul>
-    <li>How to connect arduino with python</li>
-    <li>How to take the input from arduino</li>
+    <li>How to connect Arduino with Python</li>
+    <li>How to take the input from Arduino</li>
     <li>How to program the input taken</li>
     <li>How to program an audio player</li>
     </ul>
@@ -48,7 +48,7 @@
 
 <h3>Final Milestone:</h3>
 <ol>
-<li>Connect arduino with python</li>
+<li>Connect Arduino with Python</li>
     <ul>
     <li>Be able to command the Arduino via Python</li>
     <li>Take the input from the Arduino and connect it with the audio player/functions</li>
