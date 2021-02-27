@@ -14,7 +14,7 @@
 
 <h3>Management:</h3>
 <ul>
-<li>Branching Strategy -> GitHub</li>
+<li>Branching Strategy -> GitHub Flow</li>
 <li>Kanban</li>
 <li>Mandatory Code Reviews</li>
 </ul>
