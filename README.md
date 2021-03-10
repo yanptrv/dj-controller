@@ -62,4 +62,4 @@ Fully functional audio player, that gives the users the ability to control two s
 <li>A good looking UI</li>
 </ol>
 
-<p><b><i>[Kristiyan Petrov](https://github.com/krispetrov) and [Alexander Naidenov](https://github.com/aon2003)</i></b></p>
+[Kristiyan Petrov](https://github.com/krispetrov) and [Alexander Naidenov](https://github.com/aon2003)
