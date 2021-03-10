@@ -47,9 +47,9 @@ Fully functional audio player, that gives the users the ability to control two s
 <ol>
 <li>Hardware</li>
     <ul>
-    <li>Conections between the potentiometers and the controller</li>
-    <li>LCD display showing the changes and controls</li>
-    <li>Custom box to make a presentable DJ controller</li>
+    <li>Connections and soldiering between the potentiometers, lcd display, sliders etc. and the controller</li>
+    <li>LCD display showing the controls</li>
+    <li>Custom plastic box to fit the hardware and make a presentable DJ controller</li>
     </ul>
 <li>Connect Arduino with Python</li>
     <ul>
