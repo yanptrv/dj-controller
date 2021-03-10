@@ -2,7 +2,9 @@
 
 <h3>Description:</h3>
 <p>
-Fully functional audio player, that gives the users the ability to control two songs at the same time. The project covers both software and hardware environment. At the base sits a multifunctional audio player, which can be connected to an Arduino controller and take the input from potentiometers and use it to manage the functions of the player.
+Fully functional audio player, that gives the users the ability to control two songs at the same time.
+The project covers both software and hardware environment.
+At the base sits a multifunctional audio player, which can be connected to an Arduino controller and take the input from potentiometers and use it to manage the functions of the player.
 </p>
 
 <h3>Technologies:</h3>
