@@ -59,7 +59,7 @@ Fully functional audio player, that gives the users the ability to control two s
 
 <h3>Optional:</h3>
 <ol>
-<li>A good looking UI</li>
+<li>A good looking audio player UI</li>
 </ol>
 
-[Kristiyan Petrov](https://github.com/krispetrov) and [Alexander Naidenov](https://github.com/aon2003)
+Made by: [Kristiyan Petrov](https://github.com/krispetrov) and [Alexander Naidenov](https://github.com/aon2003)
