@@ -14,6 +14,7 @@ DJCON is an **open-source software** and **hardware** project for Linux PCs. You
 - Regularly updating the [Wiki](https://github.com/krispetrov/dj-controller/wiki)
 
 ### First Milestone:
+#### Research
 1. Technology Research
     - How to connect Arduino with Python
     - How to take the input from Arduino
