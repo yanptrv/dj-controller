@@ -11,9 +11,9 @@ Fully functional audio player, that gives the users the ability to control two s
 - Branching Strategy -> [GitHub Flow](https://githubflow.github.io/)
 - Kanban -> [GitHub Projects](https://github.com/besenhimself/audioMixer/projects/1)
 - Mandatory Code Reviews
+- Regularly updating the [Wiki](https://github.com/krispetrov/dj-controller/wiki)
 
 ### First Milestone:
-
 1. Technology Research
     - How to connect Arduino with Python
     - How to take the input from Arduino
@@ -25,16 +25,23 @@ Fully functional audio player, that gives the users the ability to control two s
    - Using a song as an input
    - Basic functions of an audio player: play, pause, skip, replay
 2. Advanced audio player functions
-   - Being able to multitask between two songs
-   - Adding advanced functions to the audio player: volume up/down, speed etc
+    - Use two songs at the same time
+    - Being able to multitask between two songs
+    - Adding advanced functions to the audio player: volume up/down, speed etc.
+3. Arduino code
+    - Taking input from multiple potentiometers
+    - Creating the logic of the code
+    - Programming the LCD to show volume changes
 
 ### Final Milestone:
 1. Hardware
-    - Connections and soldiering between the potentiometers, lcd display, sliders etc. and the controller
-    - LCD display showing the controls
-    - Custom plastic box to fit the hardware and make a presentable DJ controller
-2. Connect Arduino with Python
-    - Be able to control the audio player via Arduino controller
+    - Connections between the hardware
+    - Hardware soldiering
+    - Presentable case that can fit all the parts
+2. Arduino with Python
+    - Connect the Arduino with the Python code
+    - Read the values of the potentiomeres
+    - Use the values to control the audio player
 
 ### Optional:
 1. A good looking audio player UI
