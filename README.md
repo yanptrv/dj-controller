@@ -1,7 +1,7 @@
-# DJ Controller
+# DJCON
 
 ### Description:
-Fully functional audio player, that gives the users the ability to control two songs at the same time. The project covers both software and hardware environment. At the base sits a multifunctional audio player, which can be connected to an Arduino controller and take the input from potentiometers and use it to manage the functions of the player.
+DJCON is an **open-source software** and **hardware** project for Linux PCs. You can either use our audio player that can **play up to two songs** at once and control them or follow the complete guide and create yourself the **DIY** music controller with **potentiometers**, **Arduino** and an optional **LCD**.
 
 ### Technologies:
 - Python3
