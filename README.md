@@ -12,7 +12,7 @@ DJCON is an **open-source software** and **hardware** project for Linux PCs. You
 - Kanban -> [GitHub Projects](https://github.com/besenhimself/audioMixer/projects/1)
 - Mandatory Code Reviews
 - Regularly updating the [Wiki](https://github.com/krispetrov/dj-controller/wiki)
-- 
+
 ### First Milestone:
 #### Research
 1. Technology Research
