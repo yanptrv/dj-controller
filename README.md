@@ -47,4 +47,4 @@ DJCON is an **open-source software** and **hardware** project for Linux PCs. You
 ### Optional:
 1. A good looking audio player UI
 
-Made by: [Kristiyan Petrov](https://github.com/krispetrov) and [Alexander Naidenov](https://github.com/aon2003)
+Made by: [Kristiyan Petrov](https://www.linkedin.com/in/kris-petrov/) and [Alexander Naidenov](https://www.linkedin.com/in/alex-naida/)
