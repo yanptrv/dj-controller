@@ -5,7 +5,7 @@ DJCON is an **open-source software** and **hardware** project for Linux PCs. You
 
 ### Technologies:
 - Python3
-- Arduino
+- Arduino1.8
 
 ### Management:
 - Branching Strategy -> [GitHub Flow](https://githubflow.github.io/)
