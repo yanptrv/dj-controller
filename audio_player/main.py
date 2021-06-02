@@ -1,13 +1,19 @@
 import os
+import sys
+from threading import Thread
+from time import sleep
+
 import pygame
 import vlc
 from tkinter import *
 from tkinter.filedialog import askdirectory
 
+from midi import MIDI
+
 window = Tk()
 window.title("DJCON")
 window.minsize(700, 350)
-# window.maxsize(1920, 1080)
+window.maxsize(700, 350)
 
 
 class PlayerLeft:
@@ -20,6 +26,10 @@ class PlayerLeft:
         self.songs_counter = 0
         self.volume = IntVar()
     
+    @staticmethod
+    def exit():
+        pygame.mixer.quit()
+    
     # FUNCTIONS FOR THE BUTTONS
     def directory_chooser(self, event):
         self.directory = askdirectory()
@@ -29,7 +39,7 @@ class PlayerLeft:
                     or file.endswith(".mp3") \
                     or file.endswith(".ogg"):
                 self.songs.append(file)
-                print(file)
+                # print(file)
         
         self.music.load(self.directory + "/" + self.songs[self.current_song])
         
@@ -63,8 +73,10 @@ class PlayerLeft:
     def pause_song(self, event):
         if self.music.get_busy():
             self.music.pause()
+            self.change_label("Music Paused")
         else:
             self.music.unpause()
+            self.change_label()
     
     def next_song(self, event):
         if self.current_song < self.songs_counter - 1:
@@ -83,7 +95,7 @@ class PlayerLeft:
             self.change_label()
 
 
-class PlayerRight:  # todo
+class PlayerRight:
     def __init__(self):
         self.music = vlc.MediaPlayer()
         self.directory = ""
@@ -92,18 +104,22 @@ class PlayerRight:  # todo
         self.songs_counter = 0
         self.playing = False
         self.volume = IntVar()
+        self.position = IntVar()
+        
+    def exit(self):
+        self.music.stop()
     
     # FUNCTIONS FOR THE BUTTONS
     def directory_chooser(self, event):
         self.directory = askdirectory()
-        print(self.directory)
+        # print(self.directory)
         
         for file in os.listdir(self.directory):
             if file.endswith(".mp3") \
                     or file.endswith(".wav") \
                     or file.endswith(".ogg"):
                 self.songs.append(file)
-                print(file)
+                # print(file)
         
         self.music.set_media(vlc.Media(self.directory + "/" +
                                        self.songs[self.current_song]))
@@ -116,10 +132,16 @@ class PlayerRight:  # todo
             listbox_right.insert(0, str(i) + ". " + song)
             i -= 1
         self.songs.reverse()
-
+    
     def change_volume(self, event):
         self.music.audio_set_volume(self.volume.get())
-
+    
+    def get_position(self):
+        return self.music.get_position()
+    
+    def change_position(self, event):
+        self.music.set_position(float(self.position.get()) / float(100))
+    
     def change_label(self, text=None):
         if text is None:
             song_label_right_value.set(self.songs[self.current_song])
@@ -143,10 +165,12 @@ class PlayerRight:  # todo
         if self.playing:
             self.music.set_pause(1)
             self.playing = False
+            self.change_label("Music Paused")
         else:
             self.music.set_pause(0)
             self.playing = True
-
+            self.change_label()
+    
     def next_song(self, event):
         if self.current_song < self.songs_counter - 1:
             self.current_song += 1
@@ -216,7 +240,7 @@ scrollbar_right.pack(side=RIGHT, fill=Y)
 listbox_right = Listbox(song_frame_right, yscrollcommand=scrollbar_right.set,
                         selectmode=SINGLE, height=10, width=30)
 listbox_right.pack()
-scrollbar_left.config(command=listbox_right.yview)
+scrollbar_right.config(command=listbox_right.yview)
 
 # BUTTONS LEFT
 buttons_frame_up_left = Frame(player_left)
@@ -249,15 +273,6 @@ buttons_left["prev"].bind("<Button-1>", pl.prev_song)
 buttons_left["stop"].bind("<Button-1>", pl.stop_song)
 buttons_left["change_playlist"].bind("<Button-1>", pl.directory_chooser)
 
-song_slider_left = Scale(buttons_frame_mid_left, orient=HORIZONTAL, length=200)
-song_slider_left.pack()
-
-song_label_left_value = StringVar()
-song_label_left = Label(buttons_frame_mid_left,
-                        textvariable=song_label_left_value,
-                        width=35)
-song_label_left.pack()
-
 # BUTTONS RIGHT
 buttons_frame_up_right = Frame(player_right)
 buttons_frame_up_right.pack()
@@ -289,8 +304,19 @@ buttons_right["prev"].bind("<Button-1>", pr.prev_song)
 buttons_right["stop"].bind("<Button-1>", pr.stop_song)
 buttons_right["change_playlist"].bind("<Button-1>", pr.directory_chooser)
 
+# SONG POSITION SLIDERS
+song_slider_left = Scale(buttons_frame_mid_left, orient=HORIZONTAL, length=200)
+song_slider_left.pack()
+
+song_label_left_value = StringVar()
+song_label_left = Label(buttons_frame_mid_left,
+                        textvariable=song_label_left_value,
+                        width=35)
+song_label_left.pack()
+
 song_slider_right = Scale(buttons_frame_mid_right, orient=HORIZONTAL,
-                          length=200)
+                          length=200, variable=pr.position,
+                          command=pr.change_position)
 song_slider_right.pack()
 
 song_label_right_value = StringVar()
@@ -304,5 +330,35 @@ button_exit = Button(window, text="Exit",
                      command=window.destroy)
 button_exit.pack(side=BOTTOM)
 
+
 # LOOP THAT RUNS THE PROGRAM
+class Seek(Thread):
+    def __init__(self):
+        super().__init__()
+        self.flag = False
+    
+    def exit(self):
+        self.flag = True
+    
+    def run(self):
+        while True:
+            if self.exit is True:
+                exit()
+            song_slider_right.set(pr.get_position() * 100)
+
+
+right_seek = Seek()
+right_seek.start()
+midi_controller = MIDI(volume_slider_left, volume_slider_right,
+                       song_slider_left, song_slider_right)
+# if midi_controller.board is not None:
+midi_controller.start()
 window.mainloop()
+# sys.exit(0)
+quit(0)
+
+# STOPPING THE PROGRAM
+right_seek.exit()
+midi_controller.join()
+pl.exit()
+# pr.stop_song()
