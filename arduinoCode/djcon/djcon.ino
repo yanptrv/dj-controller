@@ -84,11 +84,11 @@ void loop() {
     volumechanged1 = false;
     delay(0.2);
     Serial.println(volume1);
-    if (i) {
+    if (i > 1) {
           flag = 1;
     }
     lcd.clear();
-    i = 1;
+    i++;
   }
   if (volumechanged2 == true) {
     Serial.println("vol2");
@@ -96,11 +96,11 @@ void loop() {
     lcd.clear();
     delay(0.2);
     Serial.println(volume2);
-    if (i) {
+    if (i > 1) {
           flag = 2;
     }
     lcd.clear();
-    i = 1;
+    i++;
   }
   if (seekchanged1 == true) {
     Serial.println("seek1");
