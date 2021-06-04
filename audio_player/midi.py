@@ -50,22 +50,22 @@ class MIDI(Thread):
             elif val == 'seek2':
                 self.song_right.set(self.read_serial())
             elif val == 'play1':
-                self.pl.play_song()
+                self.pl.play_song(0)
             elif val == 'stop1':
-                self.pl.stop_song()
+                self.pl.stop_song(0)
             elif val == 'pause1':
-                self.pl.pause_song()
+                self.pl.pause_song(0)
             elif val == 'next1':
-                self.pl.next_song()
+                self.pl.next_song(0)
             elif val == 'prev1':
-                self.pl.prev_song()
+                self.pl.prev_song(0)
             elif val == 'play2':
-                self.pr.play_song()
+                self.pr.play_song(0)
             elif val == 'stop2':
-                self.pr.stop_song()
+                self.pr.stop_song(0)
             elif val == 'pause2':
-                self.pr.pause_song()
+                self.pr.pause_song(0)
             elif val == 'next2':
-                self.pr.next_song()
+                self.pr.next_song(0)
             elif val == 'prev2':
-                self.pr.prev_song()
+                self.pr.prev_song(0)
