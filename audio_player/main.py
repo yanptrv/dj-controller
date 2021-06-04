@@ -1,173 +1,14 @@
-import os
-import pygame
-import vlc
 from tkinter import *
-from tkinter.filedialog import askdirectory
+from player import Player
+from midi import MIDI
 
 window = Tk()
 window.title("DJCON")
 window.minsize(700, 350)
-# window.maxsize(1920, 1080)
+window.maxsize(700, 350)
 
-
-class PlayerLeft:
-    def __init__(self):
-        pygame.mixer.init()
-        self.music = pygame.mixer.music
-        self.directory = ""
-        self.songs = []
-        self.current_song = 0
-        self.songs_counter = 0
-        self.volume = IntVar()
-    
-    # FUNCTIONS FOR THE BUTTONS
-    def directory_chooser(self, event):
-        self.directory = askdirectory()
-        
-        for file in os.listdir(self.directory):
-            if file.endswith(".wav") \
-                    or file.endswith(".mp3") \
-                    or file.endswith(".ogg"):
-                self.songs.append(file)
-                print(file)
-        
-        self.music.load(self.directory + "/" + self.songs[self.current_song])
-        
-        # PRINTING THE SONG NAMES
-        self.songs.reverse()
-        self.songs_counter = len(self.songs)
-        i = self.songs_counter
-        for song in self.songs:
-            listbox_left.insert(0, str(i) + ". " + song)
-            i -= 1
-        self.songs.reverse()
-    
-    def change_volume(self, event):
-        self.music.set_volume(float(self.volume.get()) / float(100))
-    
-    def change_label(self, text=None):
-        if text is None:
-            song_label_left_value.set(self.songs[self.current_song])
-        else:
-            song_label_left_value.set(text)
-    
-    def play_song(self, event):
-        self.music.load(self.directory + "/" + self.songs[self.current_song])
-        self.music.play()
-        self.change_label()
-    
-    def stop_song(self, event):
-        self.music.stop()
-        self.change_label("Music Stopped")
-    
-    def pause_song(self, event):
-        if self.music.get_busy():
-            self.music.pause()
-        else:
-            self.music.unpause()
-    
-    def next_song(self, event):
-        if self.current_song < self.songs_counter - 1:
-            self.current_song += 1
-            self.music.load(self.directory + "/" +
-                            self.songs[self.current_song])
-            self.music.play()
-            self.change_label()
-    
-    def prev_song(self, event):
-        if self.current_song > 0:
-            self.current_song -= 1
-            self.music.load(self.directory + "/" +
-                            self.songs[self.current_song])
-            self.music.play()
-            self.change_label()
-
-
-class PlayerRight:  # todo
-    def __init__(self):
-        self.music = vlc.MediaPlayer()
-        self.directory = ""
-        self.songs = []
-        self.current_song = 0
-        self.songs_counter = 0
-        self.playing = False
-        self.volume = IntVar()
-    
-    # FUNCTIONS FOR THE BUTTONS
-    def directory_chooser(self, event):
-        self.directory = askdirectory()
-        print(self.directory)
-        
-        for file in os.listdir(self.directory):
-            if file.endswith(".mp3") \
-                    or file.endswith(".wav") \
-                    or file.endswith(".ogg"):
-                self.songs.append(file)
-                print(file)
-        
-        self.music.set_media(vlc.Media(self.directory + "/" +
-                                       self.songs[self.current_song]))
-        
-        # PRINTING THE SONG NAMES
-        self.songs.reverse()
-        self.songs_counter = len(self.songs)
-        i = self.songs_counter
-        for song in self.songs:
-            listbox_right.insert(0, str(i) + ". " + song)
-            i -= 1
-        self.songs.reverse()
-
-    def change_volume(self, event):
-        self.music.audio_set_volume(self.volume.get())
-
-    def change_label(self, text=None):
-        if text is None:
-            song_label_right_value.set(self.songs[self.current_song])
-        else:
-            song_label_right_value.set(text)
-        pass
-    
-    def play_song(self, event):
-        self.music.set_media(vlc.Media(self.directory + "/" +
-                                       self.songs[self.current_song]))
-        self.music.play()
-        self.playing = True
-        self.change_label()
-    
-    def stop_song(self, event):
-        self.music.stop()
-        self.playing = False
-        self.change_label("Music Stopped")
-    
-    def pause_song(self, event):
-        if self.playing:
-            self.music.set_pause(1)
-            self.playing = False
-        else:
-            self.music.set_pause(0)
-            self.playing = True
-
-    def next_song(self, event):
-        if self.current_song < self.songs_counter - 1:
-            self.current_song += 1
-            self.music.set_media(vlc.Media(self.directory + "/" +
-                                           self.songs[self.current_song]))
-            self.music.play()
-            self.playing = True
-            self.change_label()
-    
-    def prev_song(self, event):
-        if self.current_song > 0:
-            self.current_song -= 1
-            self.music.set_media(vlc.Media(self.directory + "/" +
-                                           self.songs[self.current_song]))
-            self.music.play()
-            self.playing = True
-            self.change_label()
-
-
-pl = PlayerLeft()
-pr = PlayerRight()
+pl = Player()
+pr = Player()
 
 player_left = Frame(window)
 player_left.pack(side=LEFT)
@@ -216,7 +57,7 @@ scrollbar_right.pack(side=RIGHT, fill=Y)
 listbox_right = Listbox(song_frame_right, yscrollcommand=scrollbar_right.set,
                         selectmode=SINGLE, height=10, width=30)
 listbox_right.pack()
-scrollbar_left.config(command=listbox_right.yview)
+scrollbar_right.config(command=listbox_right.yview)
 
 # BUTTONS LEFT
 buttons_frame_up_left = Frame(player_left)
@@ -249,15 +90,6 @@ buttons_left["prev"].bind("<Button-1>", pl.prev_song)
 buttons_left["stop"].bind("<Button-1>", pl.stop_song)
 buttons_left["change_playlist"].bind("<Button-1>", pl.directory_chooser)
 
-song_slider_left = Scale(buttons_frame_mid_left, orient=HORIZONTAL, length=200)
-song_slider_left.pack()
-
-song_label_left_value = StringVar()
-song_label_left = Label(buttons_frame_mid_left,
-                        textvariable=song_label_left_value,
-                        width=35)
-song_label_left.pack()
-
 # BUTTONS RIGHT
 buttons_frame_up_right = Frame(player_right)
 buttons_frame_up_right.pack()
@@ -289,8 +121,25 @@ buttons_right["prev"].bind("<Button-1>", pr.prev_song)
 buttons_right["stop"].bind("<Button-1>", pr.stop_song)
 buttons_right["change_playlist"].bind("<Button-1>", pr.directory_chooser)
 
-song_slider_right = Scale(buttons_frame_mid_right, orient=HORIZONTAL,
-                          length=200)
+# SONG POSITION SLIDERS
+song_slider_left = Scale(buttons_frame_mid_left,
+                         orient=HORIZONTAL,
+                         length=200,
+                         variable=pl.position,
+                         command=pl.change_position)
+song_slider_left.pack()
+
+song_label_left_value = StringVar()
+song_label_left = Label(buttons_frame_mid_left,
+                        textvariable=song_label_left_value,
+                        width=35)
+song_label_left.pack()
+
+song_slider_right = Scale(buttons_frame_mid_right,
+                          orient=HORIZONTAL,
+                          length=200,
+                          variable=pr.position,
+                          command=pr.change_position)
 song_slider_right.pack()
 
 song_label_right_value = StringVar()
@@ -304,5 +153,11 @@ button_exit = Button(window, text="Exit",
                      command=window.destroy)
 button_exit.pack(side=BOTTOM)
 
-# LOOP THAT RUNS THE PROGRAM
+pl.set(listbox_left, song_label_left_value)
+pr.set(listbox_right, song_label_right_value)
+
+# THREAD FOR USING THE MIDI CONTROLLER INPUT
+midi_controller = MIDI(pl, pr, volume_slider_left, volume_slider_right,
+                       song_slider_left, song_slider_right)
+midi_controller.start()
 window.mainloop()
